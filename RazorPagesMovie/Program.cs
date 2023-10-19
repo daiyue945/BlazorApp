@@ -1,3 +1,8 @@
+ï»¿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using RazorPagesMovie.Data;
+using RazorPagesMovie.Models;
+
 namespace RazorPagesMovie
 {
     public class Program
@@ -5,30 +10,37 @@ namespace RazorPagesMovie
         public static void Main(string[] args)
         {
             var builder = WebApplication.CreateBuilder(args);
+            builder.Services.AddDbContext<RazorPagesMovieContext>(options =>
+                options.UseSqlServer(builder.Configuration.GetConnectionString("RazorPagesMovieContext") ?? throw new InvalidOperationException("Connection string 'RazorPagesMovieContext' not found.")));
 
             // Add services to the container.
             builder.Services.AddRazorPages();
 
             var app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())//µ±Ó¦ÓÃÎ´ÔÚ¿ª·¢Ä£Ê½ÖĞÔËĞĞÊ±
+            using (var scope = app.Services.CreateScope())//Seed æ–¹æ³•å®Œæˆæ—¶é‡Šæ”¾ä¸Šä¸‹æ–‡ã€‚ using è¯­å¥å°†ç¡®ä¿é‡Šæ”¾ä¸Šä¸‹æ–‡ã€‚
             {
-                app.UseExceptionHandler("/Error");//½«Òì³£ÖÕ½áµãÉèÖÃÎª /Error
+                var services = scope.ServiceProvider;//ä»ä¾èµ–æ³¨å…¥ (DI) å®¹å™¨ä¸­è·å–æ•°æ®åº“ä¸Šä¸‹æ–‡å®ä¾‹ã€‚
+                SeedData.Initialize(services);//è°ƒç”¨ seedData.Initialize æ–¹æ³•ï¼Œå¹¶å‘å…¶ä¼ é€’æ•°æ®åº“ä¸Šä¸‹æ–‡å®ä¾‹ã€‚
+            }
+            // Configure the HTTP request pipeline.
+            if (!app.Environment.IsDevelopment())//å½“åº”ç”¨æœªåœ¨å¼€å‘æ¨¡å¼ä¸­è¿è¡Œæ—¶
+            {
+                app.UseExceptionHandler("/Error");//å°†å¼‚å¸¸ç»ˆç»“ç‚¹è®¾ç½®ä¸º /Error
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();//ÆôÓÃ HTTP ÑÏ¸ñ´«Êä°²È«Ğ­Òé (HSTS)
+                app.UseHsts();//å¯ç”¨ HTTP ä¸¥æ ¼ä¼ è¾“å®‰å…¨åè®® (HSTS)
             }
 
-            app.UseHttpsRedirection();//½« HTTP ÇëÇóÖØ¶¨Ïòµ½ HTTPS¡£
-            app.UseStaticFiles();//Ê¹ÄÜ¹»Ìá¹© HTML¡¢CSS¡¢Ó³ÏñºÍ JavaScript µÈ¾²Ì¬ÎÄ¼ş
+            app.UseHttpsRedirection();//å°† HTTP è¯·æ±‚é‡å®šå‘åˆ° HTTPSã€‚
+            app.UseStaticFiles();//ä½¿èƒ½å¤Ÿæä¾› HTMLã€CSSã€æ˜ åƒå’Œ JavaScript ç­‰é™æ€æ–‡ä»¶
 
-            app.UseRouting();//ÏòÖĞ¼ä¼ş¹ÜµÀÌí¼ÓÂ·ÓÉÆ¥Åä
+            app.UseRouting();//å‘ä¸­é—´ä»¶ç®¡é“æ·»åŠ è·¯ç”±åŒ¹é…
 
-            app.UseAuthorization();//ÊÚÈ¨ÓÃ»§·ÃÎÊ°²È«×ÊÔ´¡£
+            app.UseAuthorization();//æˆæƒç”¨æˆ·è®¿é—®å®‰å…¨èµ„æºã€‚
 
-            app.MapRazorPages();//Îª Razor Pages ÅäÖÃÖÕ½áµãÂ·ÓÉ¡£
+            app.MapRazorPages();//ä¸º Razor Pages é…ç½®ç»ˆç»“ç‚¹è·¯ç”±ã€‚
 
-            app.Run();//ÔËĞĞÓ¦ÓÃ¡£
+            app.Run();//è¿è¡Œåº”ç”¨ã€‚
         }
     }
 }
