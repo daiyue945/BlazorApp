@@ -17,9 +17,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "MvcMovie", "MvcMovie\MvcMov
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TodoApi", "TodoApi\TodoApi.csproj", "{AE2FDA97-4FD9-4431-8738-1A706A9712C4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcGreeter", "GrpcGreeter\GrpcGreeter.csproj", "{AFB5308C-27B4-4195-B70B-8243DD9FE513}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcGreeter", "GrpcGreeter\GrpcGreeter.csproj", "{AFB5308C-27B4-4195-B70B-8243DD9FE513}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GrpcGreeterClient", "GrpcGreeterClient\GrpcGreeterClient.csproj", "{045D286E-244D-47FE-A2FD-36E9D57ED07A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrpcGreeterClient", "GrpcGreeterClient\GrpcGreeterClient.csproj", "{045D286E-244D-47FE-A2FD-36E9D57ED07A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ContosoUniversity", "ContosoUniversity\ContosoUniversity.csproj", "{840AD9CF-4837-42B0-A1AA-B9C44E476C88}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -63,6 +65,10 @@ Global
 		{045D286E-244D-47FE-A2FD-36E9D57ED07A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{045D286E-244D-47FE-A2FD-36E9D57ED07A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{045D286E-244D-47FE-A2FD-36E9D57ED07A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{840AD9CF-4837-42B0-A1AA-B9C44E476C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{840AD9CF-4837-42B0-A1AA-B9C44E476C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{840AD9CF-4837-42B0-A1AA-B9C44E476C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{840AD9CF-4837-42B0-A1AA-B9C44E476C88}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
