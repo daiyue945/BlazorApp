@@ -13,10 +13,15 @@ namespace GrpcGreeter.Services
 
         public override Task<HelloReply> SayHello(HelloRequest request, ServerCallContext context)
         {
+            //ServerCallContext 不提供对所有 ASP.NET API 中 HttpContext 的完全访问权限
+            var httpcontext = context.GetHttpContext();
+            var clientCertificate = httpcontext.Connection.ClientCertificate;
+
             return Task.FromResult(new HelloReply
             {
-                Message = "Hello " + request.Name
+                Message = $"Hello {request.Name} from {clientCertificate?.Issuer}"
             });
         }
+
     }
 }
