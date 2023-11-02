@@ -1,4 +1,8 @@
-﻿using ContosoUniversity.Models;
+﻿using Microsoft.EntityFrameworkCore;
+using ContosoUniversity.Data;
+using ContosoUniversity.Models.SchoolViewModels;
+
+using ContosoUniversity.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System;
