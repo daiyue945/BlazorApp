@@ -16,10 +16,12 @@ namespace ContosoUniversity.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly SchoolContext _schoolContext;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, SchoolContext schoolContext)
         {
             _logger = logger;
+            _schoolContext = schoolContext;
         }
 
         public IActionResult Index()
@@ -36,6 +38,16 @@ namespace ContosoUniversity.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+        public async Task<IActionResult> About() 
+        {
+            IQueryable<EnrollmentDateGroup> enrollmentDates = from Student in _schoolContext.Students group Student by Student.EnrollmentDate into dateGroup
+                                                              select new EnrollmentDateGroup
+                                                              {
+                                                                  EnrollmentDate=dateGroup.Key,
+                                                                  StudentCount=dateGroup.Count()
+                                                              };
+            return View(await enrollmentDates.AsNoTracking().ToListAsync());
         }
     }
 }
