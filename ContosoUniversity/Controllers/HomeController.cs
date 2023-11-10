@@ -10,6 +10,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Data.Common;
 
 namespace ContosoUniversity.Controllers
 {
@@ -39,15 +40,46 @@ namespace ContosoUniversity.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
-        public async Task<IActionResult> About() 
+        public async Task<IActionResult> About()
         {
-            IQueryable<EnrollmentDateGroup> enrollmentDates = from Student in _schoolContext.Students group Student by Student.EnrollmentDate into dateGroup
-                                                              select new EnrollmentDateGroup
-                                                              {
-                                                                  EnrollmentDate=dateGroup.Key,
-                                                                  StudentCount=dateGroup.Count()
-                                                              };
-            return View(await enrollmentDates.AsNoTracking().ToListAsync());
+            //IQueryable<EnrollmentDateGroup> enrollmentDates = from Student in _schoolContext.Students group Student by Student.EnrollmentDate into dateGroup
+            //                                                  select new EnrollmentDateGroup
+            //                                                  {
+            //                                                      EnrollmentDate=dateGroup.Key,
+            //                                                      StudentCount=dateGroup.Count()
+            //                                                  };
+
+            List<EnrollmentDateGroup> groups = new List<EnrollmentDateGroup>();
+            var conn = _schoolContext.Database.GetDbConnection();
+            try
+            {
+                await conn.OpenAsync();
+                using (var command = conn.CreateCommand())
+                {
+                    string query = "SELECT EnrollmentDate, COUNT(*) AS StudentCount "
+                        + "FROM Person "
+                        + "WHERE Discriminator = 'Student' "
+                        + "GROUP BY EnrollmentDate";
+                    command.CommandText = query;
+                    DbDataReader reader = await command.ExecuteReaderAsync();
+
+                    if (reader.HasRows)
+                    {
+                        while (await reader.ReadAsync())
+                        {
+                            var row = new EnrollmentDateGroup { EnrollmentDate = reader.GetDateTime(0), StudentCount = reader.GetInt32(1) };
+                            groups.Add(row);
+                        }
+                    }
+                    reader.Dispose();
+                }
+            }
+            finally
+            {
+                conn.Close();
+            }
+            return View(groups);
         }
+        //return View(await enrollmentDates.AsNoTracking().ToListAsync());
     }
 }

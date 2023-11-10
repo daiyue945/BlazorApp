@@ -37,7 +37,7 @@ namespace ContosoUniversity.Controllers
                 searchString = currentFilter;
             }
             ViewData["CurrentFilter"] = searchString;
-
+            
             var students = from s in _context.Students
                            select s;
             if (!String.IsNullOrEmpty(searchString))
