@@ -55,10 +55,10 @@ namespace 自动化控制微信发消息
             // }
 
             //查找记事本窗口
-            Window win = GUI.Application.WaitForWindowLikeTitle("*记事本");
-            //win.Id//PInvoke，Win32 扩展句柄，可进行其他操作
-            win.Activate();//激活
-            win.Maximize();//最大化
+            //Window win = GUI.Application.WaitForWindowLikeTitle("*记事本");
+            ////win.Id//PInvoke，Win32 扩展句柄，可进行其他操作
+            //win.Activate();//激活
+            //win.Maximize();//最大化
             //常规Win32程序，指定菜单定向操作
             //win.GetMainMenu().编辑.粘贴();
             //win.GetMainMenu().编辑.时间日期();
@@ -71,9 +71,10 @@ namespace 自动化控制微信发消息
             //}
 
             //win.MoveMouseTo(100, 150);
-            win.DoubleClick(100,150);//双击选中
+            //win.DoubleClick(100,150);//双击选中
             //win.Click(button:MouseButtonType.Right);//点击右键
-
+            Wechat w = new Wechat();
+            w.DOWechat();
         }
     }
 }

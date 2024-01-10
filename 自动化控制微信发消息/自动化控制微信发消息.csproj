@@ -11,4 +11,16 @@
     <PackageReference Include="NetAutoGUI.Windows" Version="1.0.9" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Update="Search.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="smile.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="WechatIcon.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
 </Project>
